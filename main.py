@@ -2,6 +2,7 @@
 import csv
 import os
 import shutil
+import sys
 
 with open("unwanted_dirs.csv", newline='') as f:
     reader = csv.reader(f)
@@ -61,6 +62,11 @@ if __name__ == '__main__':
     print("\nScanning...")
     cdirs = filter_dir(scan_dirs("/"))
     print("Found %d cache directories." % len(cdirs))
+
+    if "-d" in sys.argv:
+        print("\n")
+        for dir in cdirs:
+            print(dir)
 
     print("Estimated total removed size: %d MB" % (calculate_size(cdirs) / 1000 / 1000))
 
