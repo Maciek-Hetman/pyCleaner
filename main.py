@@ -109,7 +109,6 @@ if __name__ == '__main__':
         for dir in cdirs:
             print(dir)
 
-    # print("Estimated total removed size: %d MB" % (calculate_size(cdirs) / 1000 / 1000))
     print("Esitmated total removed size: %s" % get_size_with_unit(cdirs) )
 
     user_in = input("Are you sure you want to remove ALL cache? (yes/no) ")
