@@ -6,9 +6,7 @@ import sys
 
 with open("unwanted_dirs.csv", newline='') as f:
     reader = csv.reader(f)
-    UNWANTED_DIRS = list(reader)
-
-UNWANTED_DIRS = UNWANTED_DIRS[0]
+    UNWANTED_DIRS = list(reader)[0]
 
 with open("user_dirs.csv", newline='') as f:
     reader = csv.reader(f)
