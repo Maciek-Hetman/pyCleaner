@@ -83,7 +83,10 @@ def get_size_with_unit(dir_list):
 
 
 def remove_cache(dir_list):
-    toolbar_width = 40
+    # Terminal dimensions
+    rows, columns = os.popen('stty size', 'r').read().split()
+
+    toolbar_width = int(columns) - 10
     ticks = 0
 
     sys.stdout.write("[%s]" % (" " * toolbar_width))
@@ -105,6 +108,7 @@ def remove_cache(dir_list):
 
 
 if __name__ == '__main__':
+    os.system("clear")
     load_user_dirs()
 
     print("List of ignored directories:")
