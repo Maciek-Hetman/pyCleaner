@@ -4,9 +4,22 @@ import os
 import shutil
 import sys
 
-with open("unwanted_dirs.csv", newline='') as f:
-    reader = csv.reader(f)
-    UNWANTED_DIRS = list(reader)[0]
+UNWANTED_DIRS = [
+    "/cores",
+    "/dev",
+    "/etc",
+    "/opt",
+    "/private",
+    "/sbin",
+    "/System",
+    "/tmp",
+    "/usr",
+    "/var",
+    "/Volumes",
+    "/.Trashes",
+    "/Applications/Safari.app",
+    "/Library/Developer"
+]
 
 with open("user_dirs.csv", newline='') as f:
     reader = csv.reader(f)
