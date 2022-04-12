@@ -5,7 +5,6 @@ import shutil
 import sys
 
 HOME_DIRECTORY = os.path.expanduser('~')
-
 UNWANTED_DIRS = [
     "/cores",
     "/dev",
@@ -20,15 +19,13 @@ UNWANTED_DIRS = [
     "/Volumes",
     "/.Trashes",
     "/Applications/Safari.app",
-    "/Library/Developer"
-]
+    "/Library/Developer"]
 
 def load_user_dirs():
     with open("user_dirs.csv", newline='') as f:
         reader = csv.reader(f)
-        user_dirs = list(reader)[0]
 
-        for dir in user_dirs:
+        for dir in list(reader)[0]:
             if "$HOME" in dir:
                 UNWANTED_DIRS.append(dir.replace("$HOME", HOME_DIRECTORY))
             elif "~" in dir:
@@ -60,23 +57,19 @@ def filter_dir(dir_list):
     return cache_dirs
 
 
-def calculate_size(dir_list):
-    total_size = 0
+def get_size_with_unit(dir_list):
+    size = 0
 
     for dir in dir_list:
         try:
             for f in os.listdir(dir):
-                total_size += os.path.getsize(os.path.join(dir, f))
+                size += os.path.getsize(os.path.join(dir, f))
         except:
             pass
 
-    return total_size       # Returns size in bytes
-
-def get_size_with_unit(dir_list):
-    size = calculate_size(dir_list)
-    unit = "bytes"
-
-    if 1000 < size < 1000**2:
+    if size < 1000:
+        unit = "bytes"
+    elif 1000 < size < 1000**2:
         size = size / 1000
         unit = "kB"
     elif 1000**2 < size < 1000**3:
@@ -91,13 +84,13 @@ def get_size_with_unit(dir_list):
 
 def remove_cache(dir_list):
     for dir in dir_list:
-        if "apple" not in dir.lower():
+        if "apple" not in dir.lower():      # Not sure if this check is necessary
             shutil.rmtree(dir, ignore_errors=True)
 
 
 if __name__ == '__main__':
     load_user_dirs()
-    
+
     print("List of ignored directories:")
     for dir in UNWANTED_DIRS:
         print(dir)
