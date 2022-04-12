@@ -83,9 +83,25 @@ def get_size_with_unit(dir_list):
 
 
 def remove_cache(dir_list):
+    toolbar_width = 40
+    ticks = 0
+
+    sys.stdout.write("[%s]" % (" " * toolbar_width))
+    sys.stdout.flush()
+    sys.stdout.write("\b" * (toolbar_width + 1))
+
     for dir in dir_list:
         if "apple" not in dir.lower():      # Not sure if this check is necessary
             shutil.rmtree(dir, ignore_errors=True)
+
+        ticks += 1
+
+        if ticks >= int(len(dir_list) / toolbar_width):
+            ticks = 0
+            sys.stdout.write("-")
+            sys.stdout.flush()
+
+    sys.stdout.write("]\n")
 
 
 if __name__ == '__main__':
