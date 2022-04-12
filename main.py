@@ -46,7 +46,23 @@ def calculate_size(dir_list):
         except:
             pass
 
-    return total_size
+    return total_size       # Returns size in bytes
+
+def get_size_with_unit(dir_list):
+    size = calculate_size(dir_list)
+    unit = "bytes"
+
+    if 1000 < size < 1000**2:
+        size = size / 1000
+        unit = "kB"
+    elif 1000**2 < size < 1000**3:
+        size = size / ( 1000**2 )
+        unit = "MB"
+    else:
+        size = size / ( 1000**3 )
+        unit = "GB"
+
+    return str(int(size)) + " "  + unit
 
 
 def remove_cache(dir_list):
@@ -70,7 +86,8 @@ if __name__ == '__main__':
         for dir in cdirs:
             print(dir)
 
-    print("Estimated total removed size: %d MB" % (calculate_size(cdirs) / 1000 / 1000))
+    # print("Estimated total removed size: %d MB" % (calculate_size(cdirs) / 1000 / 1000))
+    print("Esitmated total removed size: %s" % get_size_with_unit(cdirs) )
 
     user_in = input("Are you sure you want to remove ALL cache? (yes/no) ")
 
