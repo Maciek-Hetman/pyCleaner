@@ -4,6 +4,8 @@ import os
 import shutil
 import sys
 
+HOME_DIRECTORY = os.path.expanduser('~')
+
 UNWANTED_DIRS = [
     "/cores",
     "/dev",
@@ -23,7 +25,15 @@ UNWANTED_DIRS = [
 
 with open("user_dirs.csv", newline='') as f:
     reader = csv.reader(f)
-    UNWANTED_DIRS.extend(list(reader)[0])
+    user_dirs = list(reader)[0]
+
+    for dir in user_dirs:
+        if "$HOME" in dir:
+            UNWANTED_DIRS.append(dir.replace("$HOME", HOME_DIRECTORY))
+        elif "~" in dir:
+            UNWANTED_DIRS.append(dir.replace("~", HOME_DIRECTORY))
+        else:
+            UNWANTED_DIRS.extend(dir)
 
 
 def scan_dirs(dirname):
