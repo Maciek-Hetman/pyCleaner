@@ -10,6 +10,10 @@ with open("unwanted_dirs.csv", newline='') as f:
 
 UNWANTED_DIRS = UNWANTED_DIRS[0]
 
+with open("user_dirs.csv", newline='') as f:
+    reader = csv.reader(f)
+    UNWANTED_DIRS.extend(list(reader)[0])
+
 
 def scan_dirs(dirname):
     subfolders = []
