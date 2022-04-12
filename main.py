@@ -23,17 +23,18 @@ UNWANTED_DIRS = [
     "/Library/Developer"
 ]
 
-with open("user_dirs.csv", newline='') as f:
-    reader = csv.reader(f)
-    user_dirs = list(reader)[0]
+def load_user_dirs():
+    with open("user_dirs.csv", newline='') as f:
+        reader = csv.reader(f)
+        user_dirs = list(reader)[0]
 
-    for dir in user_dirs:
-        if "$HOME" in dir:
-            UNWANTED_DIRS.append(dir.replace("$HOME", HOME_DIRECTORY))
-        elif "~" in dir:
-            UNWANTED_DIRS.append(dir.replace("~", HOME_DIRECTORY))
-        else:
-            UNWANTED_DIRS.extend(dir)
+        for dir in user_dirs:
+            if "$HOME" in dir:
+                UNWANTED_DIRS.append(dir.replace("$HOME", HOME_DIRECTORY))
+            elif "~" in dir:
+                UNWANTED_DIRS.append(dir.replace("~", HOME_DIRECTORY))
+            else:
+                UNWANTED_DIRS.extend(dir)
 
 
 def scan_dirs(dirname):
@@ -95,6 +96,8 @@ def remove_cache(dir_list):
 
 
 if __name__ == '__main__':
+    load_user_dirs()
+    
     print("List of ignored directories:")
     for dir in UNWANTED_DIRS:
         print(dir)
