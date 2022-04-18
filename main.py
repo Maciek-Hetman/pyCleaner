@@ -31,7 +31,7 @@ def load_user_dirs():
             elif "~" in dir:
                 UNWANTED_DIRS.append(dir.replace("~", HOME_DIRECTORY))
             else:
-                UNWANTED_DIRS.extend(dir)
+                UNWANTED_DIRS.append(dir)
 
 
 def scan_dirs(dirname):
