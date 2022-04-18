@@ -121,9 +121,14 @@ if __name__ == '__main__':
     print("Found %d cache directories." % len(cdirs))
 
     if "-d" in sys.argv:
-        print("\n")
-        for dir in cdirs:
-            print(dir)
+        with open("cdirs.txt", "w") as f:
+            for dir in cdirs:
+                f.write(dir + "\n")
+
+            f.close()
+
+        print("Check cdirs.txt file.")
+        sys.exit()
 
     print("Esitmated total removed size: %s" % get_size_with_unit(cdirs) )
 
